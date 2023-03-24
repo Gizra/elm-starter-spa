@@ -4,27 +4,20 @@ import App.Model exposing (..)
 import App.Types exposing (Page(..))
 import Error.View
 import Html exposing (..)
-import Pages.Search.View
+import Pages.Item.View
 
 
 view : Model -> Html Msg
 view model =
-    let
-        errorElement =
-            Error.View.view model.language model.errors
-
-        --        _ =
-        --            Debug.log "activePage" model.activePage
-    in
     case model.activePage of
-        Search ->
+        Item ->
             div []
-                [ errorElement
-                , Html.map MsgPageSearch <|
-                    Pages.Search.View.view
+                [ Error.View.view model.language model.errors
+                , Html.map MsgItemPage <|
+                    Pages.Item.View.view
                         model.language
                         model.backend
-                        model.pageSearch
+                        model.itemPage
                 ]
 
         _ ->

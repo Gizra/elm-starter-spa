@@ -3,14 +3,14 @@ module App.Model exposing
     , Model
     , Msg(..)
     , PagesReturn
-    , ServerCredentials
     , emptyModel
     )
 
 import App.Types exposing (Language(..), Page(..))
 import Backend.Model
 import Error.Model exposing (Error)
-import Pages.Search.Model
+import Json.Decode exposing (Value)
+import Pages.Item.Model
 import Time
 
 
@@ -24,14 +24,14 @@ type alias PagesReturn subModel subMsg =
 
 type Msg
     = MsgBackend Backend.Model.Msg
-    | MsgPageSearch Pages.Search.Model.Msg
+    | MsgItemPage Pages.Item.Model.Msg
     | NoOp
     | SetActivePage Page
     | SetCurrentDate Time.Posix
 
 
 type alias Flags =
-    { searchUrl : String
+    { page : String
     }
 
 
@@ -41,13 +41,7 @@ type alias Model =
     , language : Language
     , activePage : Page
     , currentDate : Time.Posix
-    , searchUrl : String
-    , pageSearch : Pages.Search.Model.Model
-    }
-
-
-type alias ServerCredentials =
-    { url : String
+    , itemPage : Pages.Item.Model.Model
     }
 
 
@@ -58,6 +52,5 @@ emptyModel =
     , language = English
     , activePage = NotFound
     , currentDate = Time.millisToPosix 0
-    , searchUrl = ""
-    , pageSearch = Pages.Search.Model.emptyModel
+    , itemPage = Pages.Item.Model.emptyModel
     }

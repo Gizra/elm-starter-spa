@@ -5,7 +5,7 @@ module App.Types exposing
 
 
 type Page
-    = Search
+    = Item
     | NotFound
 
 

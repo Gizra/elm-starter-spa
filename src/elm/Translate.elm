@@ -1,13 +1,10 @@
 module Translate exposing
     ( StringIdHttpError(..)
     , TranslationId(..)
-    , getLanguageCode
     , translate
-    , translateText
     )
 
 import App.Types exposing (Language(..))
-import Html exposing (Html, text)
 
 
 type alias TranslationSet =
@@ -17,21 +14,18 @@ type alias TranslationSet =
 
 type StringIdHttpError
     = ErrorBadUrl
-    | ErrorBadPayload String
-    | ErrorBadStatus String
+    | ErrorBadStatus Int
     | ErrorNetworkError
     | ErrorTimeout
+    | ErrorBadBody String
 
 
 type TranslationId
     = HttpError StringIdHttpError
 
 
-translateText : Language -> TranslationId -> Html msg
-translateText lang trans =
-    text <| translate lang trans
-
-
+{-| Main function to call for translation.
+-}
 translate : Language -> TranslationId -> String
 translate language trans =
     let
@@ -39,13 +33,6 @@ translate language trans =
             case trans of
                 HttpError val ->
                     translateHttpError val
-
-        translateOrFallbackEnglish str =
-            if String.isEmpty str then
-                .english translationSet
-
-            else
-                str
     in
     case language of
         English ->
@@ -59,12 +46,12 @@ translateHttpError transId =
             { english = "URL is not valid."
             }
 
-        ErrorBadPayload message ->
+        ErrorBadBody message ->
             { english = "The server responded with data of an unexpected type: " ++ message
             }
 
-        ErrorBadStatus err ->
-            { english = err
+        ErrorBadStatus int ->
+            { english = String.fromInt int
             }
 
         ErrorNetworkError ->
@@ -74,10 +61,3 @@ translateHttpError transId =
         ErrorTimeout ->
             { english = "The network request timed out."
             }
-
-
-getLanguageCode : Language -> String
-getLanguageCode language =
-    case language of
-        English ->
-            "en"

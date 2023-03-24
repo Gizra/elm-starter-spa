@@ -1,13 +1,12 @@
 ## Install
-
-    composer install
+ 
     npm install -g elm@latest-0.19.1
+    npm install
 
 ## Watch
 
-    ./vendor/bin/robo watch
+    npx parcel src/index.html
 
-Or watch with `Debug` (i.e. not optimized)
 
-    ./vendor/bin/robo watch:debug
 
+    

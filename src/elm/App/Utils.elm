@@ -1,11 +1,8 @@
-module App.Utils exposing
-    ( handleErrors
-    , updateSubModel
-    )
+module App.Utils exposing (updateSubModel)
 
-import App.Model exposing (Model, Msg(..), PagesReturn)
+import App.Model exposing (Model, Msg, PagesReturn)
 import Error.Model exposing (Error)
-import Maybe.Extra exposing (unwrap)
+import Maybe.Extra
 import Task
 
 
@@ -16,7 +13,7 @@ handleErrors : Maybe Error -> Model -> Model
 handleErrors maybeError model =
     let
         errors =
-            unwrap model.errors
+            Maybe.Extra.unwrap model.errors
                 (\error ->
                     error :: model.errors
                 )

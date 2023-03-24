@@ -1,6 +1,5 @@
 module Error.Utils exposing
     ( decodeError
-    , httpError
     , maybeHttpError
     , noError
     , plainError

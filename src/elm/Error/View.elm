@@ -1,18 +1,17 @@
-module Error.View exposing (view, viewError)
+module Error.View exposing (view)
 
 import App.Types exposing (Language)
 import Error.Model exposing (Error, ErrorType(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Json.Decode
-import Utils.Html exposing (emptyNode)
 import Utils.WebData
 
 
 view : Language -> List Error -> Html msg
 view language errors =
     if List.isEmpty errors then
-        emptyNode
+        text ""
 
     else
         div [ class "elm-errors alert debug-errors" ]
